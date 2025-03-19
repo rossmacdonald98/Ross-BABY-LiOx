@@ -16,7 +16,8 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     Returns:
         the sphere, cllif cell, and cells
     """
-
+    
+    ##### Dimensions #####
     epoxy_thickness = 2.54  # 1 inch
     alumina_compressed_thickness = 2.54  # 1 inch
     base_thickness = 0.786
@@ -24,7 +25,6 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     he_thickness = 0.6
     inconel_thickness = 0.3
     heater_gap = 0.878
-    gap_thickness = 4.605
     cap = 1.422
     firebrick_thickness = 15.24
     high = 21.093
@@ -56,6 +56,8 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     Li2O_bed_volume = 1000 # 1L = 1000 cm3
 
     Li2O_bed_thickness = calculate_z_height(Li2O_bed_radius, heater_r, heater_gap, Li2O_bed_volume)
+
+    gap_thickness = 4.605 # Needs to be replaced by calculation with bed thickness.
 
     source_h = 50.00
     source_x = x_c - 13.50
@@ -264,7 +266,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     alumina_compressed_cell = openmc.Cell(region=alumina_compressed_region)
     alumina_compressed_cell.fill = alumina
     vessel_cell = openmc.Cell(region=vessel_region)
-    vessel_cell.fill = inconel625
+    vessel_cell.fill = SS316L
     alumina_cell = openmc.Cell(region=alumina_region)
     alumina_cell.fill = alumina
     Li2O_bed_cell = openmc.Cell(region=Li2O_bed_region)
@@ -272,7 +274,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     gap_cell = openmc.Cell(region=gap_region)
     gap_cell.fill = he
     cap_cell = openmc.Cell(region=cap_region)
-    cap_cell.fill = inconel625
+    cap_cell.fill = SS316L
     firebrick_cell = openmc.Cell(region=firebrick_region)
     firebrick_cell.fill = firebrick
     heater_cell = openmc.Cell(region=heater_region)
@@ -334,8 +336,8 @@ def baby_model():
     """
 
     materials = [
-        inconel625,
-        LiOx_bed,
+        SS316L,
+        Li2O_bed,
         SS304,
         heater_mat,
         firebrick,
@@ -350,7 +352,7 @@ def baby_model():
     x_c = 587  # cm
     y_c = 60  # cm
     z_c = 100  # cm
-    sphere, PbLi_cell, cells = baby_geometry(x_c, y_c, z_c)
+    sphere, Li2O_bed_cell, cells = baby_geometry(x_c, y_c, z_c)
 
     ############################################################################
     # Define Settings
@@ -375,7 +377,7 @@ def baby_model():
 
     tbr_tally = openmc.Tally(name="TBR")
     tbr_tally.scores = ["(n,Xt)"]
-    tbr_tally.filters = [openmc.CellFilter(PbLi_cell)]
+    tbr_tally.filters = [openmc.CellFilter(Li2O_bed_cell)]
     tallies.append(tbr_tally)
 
     model = vault.build_vault_model(
@@ -393,29 +395,30 @@ def baby_model():
 # Define Materials
 # Source: PNNL Materials Compendium April 2021
 # PNNL-15870, Rev. 2
-inconel625 = openmc.Material(name="Inconel 625")
-inconel625.add_element("C", 0.000990, "wo")
-inconel625.add_element("Al", 0.003960, "wo")
-inconel625.add_element("Si", 0.004950, "wo")
-inconel625.add_element("P", 0.000148, "wo")
-inconel625.add_element("S", 0.000148, "wo")
-inconel625.add_element("Ti", 0.003960, "wo")
-inconel625.add_element("Cr", 0.215000, "wo")
-inconel625.add_element("Mn", 0.004950, "wo")
-inconel625.add_element("Fe", 0.049495, "wo")
-inconel625.add_element("Co", 0.009899, "wo")
-inconel625.add_element("Ni", 0.580000, "wo")
-inconel625.add_element("Nb", 0.036500, "wo")
-inconel625.add_element("Mo", 0.090000, "wo")
-inconel625.set_density("g/cm3", 8.44)
+
+# 316L Stainless Steel
+# Data from https://www.thyssenkrupp-materials.co.uk/stainless-steel-316l-14404.html
+SS316L = openmc.Material(name="316L Steel")
+SS316L.add_element("C", 0.0003, "wo")
+SS316L.add_element("Si", 0.01, "wo")
+SS316L.add_element("Mn", 0.02, "wo")
+SS316L.add_element("P", 0.00045, "wo")
+SS316L.add_element("S", 0.000151, "wo")
+SS316L.add_element("Cr", 0.175, "wo")
+SS316L.add_element("Ni", 0.115, "wo")
+SS316L.add_element("N", 0.001, "wo")
+SS316L.add_element("Mo", 0.00225, "wo")
+SS316L.add_element("Fe", 0.655599, "wo")
+
+SS316L.set_density("g/cm3", 8)
 
 # Lithium Oxide Pebble Bed
 Li2O_bed = openmc.Material(name="Lithium Oxide Pebble Bed")
-Li2O_bed.add_element("O", 0.5354 , "wo")
-Li2O_bed.add_element("Li", 0.4646 , "wo")
-Li2O_bed.add_element("He", 0.00002 , "wo")
+Li2O_bed.add_element("O", 0.535418 , "wo")
+Li2O_bed.add_element("Li", 0.464571 , "wo")
+Li2O_bed.add_element("He", 0.000011 , "wo")
 
-Li2O_bed.set_density("g/cm3", 1.288339253) # Density at 600C
+Li2O_bed.set_density("g/cm3", 1.409116) # Density at 600C
 
 # Stainless Steel 304 from PNNL Materials Compendium (PNNL-15870 Rev2)
 SS304 = openmc.Material(name="Stainless Steel 304")

@@ -64,12 +64,6 @@
   <library materials="Ni64" path="ENDFB-8.0-NNDC_Ni64.h5" type="neutron"/>
   <library materials="Cu63" path="ENDFB-8.0-NNDC_Cu63.h5" type="neutron"/>
   <library materials="Cu65" path="ENDFB-8.0-NNDC_Cu65.h5" type="neutron"/>
-  <library materials="Zn64" path="ENDFB-8.0-NNDC_Zn64.h5" type="neutron"/>
-  <library materials="Zn66" path="ENDFB-8.0-NNDC_Zn66.h5" type="neutron"/>
-  <library materials="Zn67" path="ENDFB-8.0-NNDC_Zn67.h5" type="neutron"/>
-  <library materials="Zn68" path="ENDFB-8.0-NNDC_Zn68.h5" type="neutron"/>
-  <library materials="Zn70" path="ENDFB-8.0-NNDC_Zn70.h5" type="neutron"/>
-  <library materials="As75" path="ENDFB-8.0-NNDC_As75.h5" type="neutron"/>
   <library materials="Zr90" path="ENDFB-8.0-NNDC_Zr90.h5" type="neutron"/>
   <library materials="Zr91" path="ENDFB-8.0-NNDC_Zr91.h5" type="neutron"/>
   <library materials="Zr92" path="ENDFB-8.0-NNDC_Zr92.h5" type="neutron"/>
@@ -83,37 +77,12 @@
   <library materials="Mo97" path="ENDFB-8.0-NNDC_Mo97.h5" type="neutron"/>
   <library materials="Mo98" path="ENDFB-8.0-NNDC_Mo98.h5" type="neutron"/>
   <library materials="Mo100" path="ENDFB-8.0-NNDC_Mo100.h5" type="neutron"/>
-  <library materials="Ag107" path="ENDFB-8.0-NNDC_Ag107.h5" type="neutron"/>
-  <library materials="Ag109" path="ENDFB-8.0-NNDC_Ag109.h5" type="neutron"/>
-  <library materials="Cd106" path="ENDFB-8.0-NNDC_Cd106.h5" type="neutron"/>
-  <library materials="Cd108" path="ENDFB-8.0-NNDC_Cd108.h5" type="neutron"/>
-  <library materials="Cd110" path="ENDFB-8.0-NNDC_Cd110.h5" type="neutron"/>
-  <library materials="Cd111" path="ENDFB-8.0-NNDC_Cd111.h5" type="neutron"/>
-  <library materials="Cd112" path="ENDFB-8.0-NNDC_Cd112.h5" type="neutron"/>
-  <library materials="Cd113" path="ENDFB-8.0-NNDC_Cd113.h5" type="neutron"/>
-  <library materials="Cd114" path="ENDFB-8.0-NNDC_Cd114.h5" type="neutron"/>
-  <library materials="Cd116" path="ENDFB-8.0-NNDC_Cd116.h5" type="neutron"/>
-  <library materials="Sn112" path="ENDFB-8.0-NNDC_Sn112.h5" type="neutron"/>
-  <library materials="Sn114" path="ENDFB-8.0-NNDC_Sn114.h5" type="neutron"/>
-  <library materials="Sn115" path="ENDFB-8.0-NNDC_Sn115.h5" type="neutron"/>
-  <library materials="Sn116" path="ENDFB-8.0-NNDC_Sn116.h5" type="neutron"/>
-  <library materials="Sn117" path="ENDFB-8.0-NNDC_Sn117.h5" type="neutron"/>
-  <library materials="Sn118" path="ENDFB-8.0-NNDC_Sn118.h5" type="neutron"/>
-  <library materials="Sn119" path="ENDFB-8.0-NNDC_Sn119.h5" type="neutron"/>
-  <library materials="Sn120" path="ENDFB-8.0-NNDC_Sn120.h5" type="neutron"/>
-  <library materials="Sn122" path="ENDFB-8.0-NNDC_Sn122.h5" type="neutron"/>
-  <library materials="Sn124" path="ENDFB-8.0-NNDC_Sn124.h5" type="neutron"/>
-  <library materials="Sb121" path="ENDFB-8.0-NNDC_Sb121.h5" type="neutron"/>
-  <library materials="Sb123" path="ENDFB-8.0-NNDC_Sb123.h5" type="neutron"/>
   <library materials="W182" path="ENDFB-8.0-NNDC_W182.h5" type="neutron"/>
   <library materials="W183" path="ENDFB-8.0-NNDC_W183.h5" type="neutron"/>
   <library materials="W184" path="ENDFB-8.0-NNDC_W184.h5" type="neutron"/>
   <library materials="W186" path="ENDFB-8.0-NNDC_W186.h5" type="neutron"/>
-  <library materials="Tl203" path="ENDFB-8.0-NNDC_Tl203.h5" type="neutron"/>
-  <library materials="Tl205" path="ENDFB-8.0-NNDC_Tl205.h5" type="neutron"/>
   <library materials="Pb204" path="ENDFB-8.0-NNDC_Pb204.h5" type="neutron"/>
   <library materials="Pb206" path="ENDFB-8.0-NNDC_Pb206.h5" type="neutron"/>
   <library materials="Pb207" path="ENDFB-8.0-NNDC_Pb207.h5" type="neutron"/>
   <library materials="Pb208" path="ENDFB-8.0-NNDC_Pb208.h5" type="neutron"/>
-  <library materials="Bi209" path="ENDFB-8.0-NNDC_Bi209.h5" type="neutron"/>
 </cross_sections>
