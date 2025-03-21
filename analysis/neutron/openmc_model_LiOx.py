@@ -14,75 +14,81 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
         z_c: z-coordinate of the center of the BABY experiment (cm)
 
     Returns:
-        the sphere, cllif cell, and cells
+        the sphere, Li2O cell, and cells
     """
     
-    ##### Dimensions #####
+    ########## Dimensions ##########
+    ## Vertical dimensions
+
     epoxy_thickness = 2.54  # 1 inch
     alumina_compressed_thickness = 2.54  # 1 inch
-    base_thickness = 0.786
+    ov_base_thickness = 0.786
     alumina_thickness = 0.635
     he_thickness = 0.6
-    inconel_thickness = 0.3
+    iv_base_thickness = 0.3
     heater_gap = 0.878
-    cap = 1.422
-    firebrick_thickness = 15.24
-    high = 21.093
-    cover = 2.392
-    z_tab = 28.00
+    iv_height = 10.8903
+    iv_cap = 1.422
+    furnace_thickness = 15.24
+    ov_height = 21.093
+    ov_cap = 2.392
+    table_height = 28.00
     lead_height = 4.00
     lead_width = 8.00
     lead_length = 16.00
-    heater_r = 0.439
-    heater_h = 25.40
+
+    heater_length = 25.40
     heater_z = (
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
         + he_thickness
-        + inconel_thickness
+        + iv_base_thickness
         + heater_gap
         + z_c
     )
 
+    ## Radial dimensions
+    heater_radius = 0.439
     Li2O_bed_radius = 7.00
-    inconel_radius = 7.3
+    iv_external_radius = 7.3
     he_radius = 9.144
-    firebrick_radius = 14.224
-    vessel_radius = 15.593
-    external_radius = 15.812
+    furnace_radius = 14.224
+    ov_internal_radius = 15.593
+    ov_external_radius = 15.812
 
+    ## Calculated dimensions
     Li2O_bed_volume = 1000 # 1L = 1000 cm3
 
-    Li2O_bed_thickness = calculate_z_height(Li2O_bed_radius, heater_r, heater_gap, Li2O_bed_volume)
+    Li2O_bed_thickness = calculate_z_height(Li2O_bed_radius, heater_radius, heater_gap, Li2O_bed_volume)
+    cover_he_thickness = iv_height - Li2O_bed_thickness # Needs to be replaced by calculation with bed thickness.
 
-    gap_thickness = 4.605 # Needs to be replaced by calculation with bed thickness.
-
+    ## Source dimensions
     source_h = 50.00
     source_x = x_c - 13.50
     source_z = z_c - 5.635
     source_external_r = 5.00
     source_internal_r = 4.75
 
-    ######## Surfaces #################
+    ########## Surfaces ##########
     z_plane_1 = openmc.ZPlane(0.0 + z_c)
     z_plane_2 = openmc.ZPlane(epoxy_thickness + z_c)
     z_plane_3 = openmc.ZPlane(epoxy_thickness + alumina_compressed_thickness + z_c)
     z_plane_4 = openmc.ZPlane(
-        epoxy_thickness + alumina_compressed_thickness + base_thickness + z_c
+        epoxy_thickness + alumina_compressed_thickness + ov_base_thickness + z_c
     )
     z_plane_5 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
         + z_c
     )
     z_plane_6 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
         + he_thickness
         + z_c
@@ -90,77 +96,77 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     z_plane_7 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
         + he_thickness
-        + inconel_thickness
+        + iv_base_thickness
         + z_c
     )
     z_plane_8 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
         + he_thickness
-        + inconel_thickness
+        + iv_base_thickness
         + Li2O_bed_thickness
         + z_c
     )
     z_plane_9 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
         + he_thickness
-        + inconel_thickness
+        + iv_base_thickness
         + Li2O_bed_thickness
-        + gap_thickness
+        + cover_he_thickness
         + z_c
     )
     z_plane_10 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
         + he_thickness
-        + inconel_thickness
+        + iv_base_thickness
         + Li2O_bed_thickness
-        + gap_thickness
-        + cap
+        + cover_he_thickness
+        + iv_cap
         + z_c
     )
     z_plane_11 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
+        + ov_base_thickness
         + alumina_thickness
-        + firebrick_thickness
+        + furnace_thickness
         + z_c
     )
     z_plane_12 = openmc.ZPlane(
-        epoxy_thickness + alumina_compressed_thickness + base_thickness + high + z_c
+        epoxy_thickness + alumina_compressed_thickness + ov_base_thickness + ov_height + z_c
     )
     z_plane_13 = openmc.ZPlane(
         epoxy_thickness
         + alumina_compressed_thickness
-        + base_thickness
-        + high
-        + cover
+        + ov_base_thickness
+        + ov_height
+        + ov_cap
         + z_c
     )
-    z_plane_14 = openmc.ZPlane(z_c - z_tab)
-    z_plane_15 = openmc.ZPlane(z_c - z_tab - epoxy_thickness)
+    z_plane_14 = openmc.ZPlane(z_c - table_height)
+    z_plane_15 = openmc.ZPlane(z_c - table_height - epoxy_thickness)
 
-    ######## Cylinder #################
+    ########## Cylinders ##########
     z_cyl_1 = openmc.ZCylinder(x0=x_c, y0=y_c, r=Li2O_bed_radius)
-    z_cyl_2 = openmc.ZCylinder(x0=x_c, y0=y_c, r=inconel_radius)
+    z_cyl_2 = openmc.ZCylinder(x0=x_c, y0=y_c, r=iv_external_radius)
     z_cyl_3 = openmc.ZCylinder(x0=x_c, y0=y_c, r=he_radius)
-    z_cyl_4 = openmc.ZCylinder(x0=x_c, y0=y_c, r=firebrick_radius)
-    z_cyl_5 = openmc.ZCylinder(x0=x_c, y0=y_c, r=vessel_radius)
-    z_cyl_6 = openmc.ZCylinder(x0=x_c, y0=y_c, r=external_radius)
+    z_cyl_4 = openmc.ZCylinder(x0=x_c, y0=y_c, r=furnace_radius)
+    z_cyl_5 = openmc.ZCylinder(x0=x_c, y0=y_c, r=ov_internal_radius)
+    z_cyl_6 = openmc.ZCylinder(x0=x_c, y0=y_c, r=ov_external_radius)
 
     right_cyl = openmc.model.RightCircularCylinder(
-        (x_c, y_c, heater_z), heater_h, heater_r, axis="z"
+        (x_c, y_c, heater_z), heater_length, heater_radius, axis="z"
     )
     ext_cyl_source = openmc.model.RightCircularCylinder(
         (source_x, y_c, source_z), source_h, source_external_r, axis="x"
@@ -169,15 +175,15 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
         (source_x + 0.25, y_c, source_z), source_h - 0.50, source_internal_r, axis="x"
     )
 
-    ######## Sphere #################
+    ########## Sphere ##########
     sphere = openmc.Sphere(x0=x_c, y0=y_c, z0=z_c, r=50.00)  # before r=50.00
 
-    ######## Lead bricks positioned under the source #################
+    ########## Lead bricks positioned under the source ##########
     positions = [
-        (x_c - 13.50, y_c, z_c - z_tab),
-        (x_c - 4.50, y_c, z_c - z_tab),
-        (x_c + 36.50, y_c, z_c - z_tab),
-        (x_c + 27.50, y_c, z_c - z_tab),
+        (x_c - 13.50, y_c, z_c - table_height),
+        (x_c - 4.50, y_c, z_c - table_height),
+        (x_c + 36.50, y_c, z_c - table_height),
+        (x_c + 27.50, y_c, z_c - table_height),
     ]
 
     lead_blocks = []
@@ -192,7 +198,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
         )
         lead_blocks.append(lead_block_region)
 
-    # regions
+    ########## Regions ##########
     source_wall_region = -ext_cyl_source & +source_region
     source_region = -source_region
     epoxy_region = +z_plane_1 & -z_plane_2 & -sphere
@@ -208,7 +214,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     cap_region = bottom_cap | cylinder_cap | top_cap
     Li2O_bed_region = +z_plane_7 & -z_plane_8 & -z_cyl_1 & +right_cyl
     gap_region = +z_plane_8 & -z_plane_9 & -z_cyl_1 & +right_cyl
-    firebrick_region = +z_plane_5 & -z_plane_11 & +z_cyl_3 & -z_cyl_4
+    furnace_region = +z_plane_5 & -z_plane_11 & +z_cyl_3 & -z_cyl_4
     heater_region = -right_cyl
     table_under_source_region = +z_plane_15 & -z_plane_14 & -sphere
     lead_block_1_region = -lead_blocks[0]
@@ -225,7 +231,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
         & ~alumina_region
         & ~Li2O_bed_region
         & ~gap_region
-        & ~firebrick_region
+        & ~furnace_region
         & ~vessel_region
         & ~cap_region
         & ~heater_region
@@ -244,7 +250,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
         & ~alumina_region
         & ~Li2O_bed_region
         & ~gap_region
-        & ~firebrick_region
+        & ~furnace_region
         & ~he_region
         & ~vessel_region
         & ~cap_region
@@ -256,7 +262,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
         & ~lead_block_4_region
     )
 
-    # cells
+    ########## Cells ##########
     source_wall_cell_1 = openmc.Cell(region=source_wall_region)
     source_wall_cell_1.fill = SS304
     source_region = openmc.Cell(region=source_region)
@@ -275,8 +281,8 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
     gap_cell.fill = he
     cap_cell = openmc.Cell(region=cap_region)
     cap_cell.fill = SS316L
-    firebrick_cell = openmc.Cell(region=firebrick_region)
-    firebrick_cell.fill = firebrick
+    furnace_cell = openmc.Cell(region=furnace_region)
+    furnace_cell.fill = furnace
     heater_cell = openmc.Cell(region=heater_region)
     heater_cell.fill = heater_mat
     table_cell = openmc.Cell(region=table_under_source_region)
@@ -304,7 +310,7 @@ def baby_geometry(x_c: float, y_c: float, z_c: float):
         cap_cell,
         Li2O_bed_cell,
         gap_cell,
-        firebrick_cell,
+        furnace_cell,
         heater_cell,
         he_cell,
         sphere_cell,
@@ -340,7 +346,7 @@ def baby_model():
         Li2O_bed,
         SS304,
         heater_mat,
-        firebrick,
+        furnace,
         alumina,
         lead,
         air,
@@ -348,7 +354,7 @@ def baby_model():
         he,
     ]
 
-    # BABY coordinates
+    ########## BABY coordinates ##########
     x_c = 587  # cm
     y_c = 60  # cm
     z_c = 100  # cm
@@ -451,14 +457,14 @@ heater_mat.set_density("g/cm3", 2.44)
 
 # Using Microtherm with 1 a% Al2O3, 27 a% ZrO2, and 72 a% SiO2
 # https://www.foundryservice.com/product/microporous-silica-insulating-boards-mintherm-microtherm-1925of-grades/
-firebrick = openmc.Material(name="Firebrick")
+furnace = openmc.Material(name="Furnace")
 # Estimate average temperature of Firebrick to be around 300 C
 # Firebrick.temperature = 273 + 300
-firebrick.add_element("Al", 0.004, "ao")
-firebrick.add_element("O", 0.666, "ao")
-firebrick.add_element("Si", 0.240, "ao")
-firebrick.add_element("Zr", 0.090, "ao")
-firebrick.set_density("g/cm3", 0.30)
+furnace.add_element("Al", 0.004, "ao")
+furnace.add_element("O", 0.666, "ao")
+furnace.add_element("Si", 0.240, "ao")
+furnace.add_element("Zr", 0.090, "ao")
+furnace.set_density("g/cm3", 0.30)
 
 # alumina insulation
 # data from https://precision-ceramics.com/materials/alumina/

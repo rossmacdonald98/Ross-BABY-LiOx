@@ -473,7 +473,7 @@
       <nuclide name="Mo98" wo="0.02230863512071266"/>
       <nuclide name="Mo100" wo="0.009131419471235856"/>
     </material>
-    <material id="31" name="Firebrick">
+    <material id="31" name="Furnace">
       <density units="g/cm3" value="0.3"/>
       <nuclide ao="0.004" name="Al27"/>
       <nuclide ao="0.6644153196" name="O16"/>
@@ -579,8 +579,8 @@
     <surface coeffs="107.101" id="6" type="z-plane"/>
     <surface coeffs="107.401" id="7" type="z-plane"/>
     <surface coeffs="113.91930390187886" id="8" type="z-plane"/>
-    <surface coeffs="118.52430390187887" id="9" type="z-plane"/>
-    <surface coeffs="119.94630390187888" id="10" type="z-plane"/>
+    <surface coeffs="118.2913" id="9" type="z-plane"/>
+    <surface coeffs="119.7133" id="10" type="z-plane"/>
     <surface coeffs="121.741" id="11" type="z-plane"/>
     <surface coeffs="126.959" id="12" type="z-plane"/>
     <surface coeffs="129.351" id="13" type="z-plane"/>
